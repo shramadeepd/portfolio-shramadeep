@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const inter = Inter({
@@ -48,6 +49,7 @@ export default function RootLayout({
         className={`${inter.variable} ${grotesk.variable} ${jetbrains.variable} font-sans bg-ink text-fg antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
