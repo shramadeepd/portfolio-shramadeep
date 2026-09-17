@@ -48,7 +48,10 @@ export const projects: Project[] = [
     tech: ["Python", "PyTorch", "Transformers", "PEFT", "LoRA", "XLS-R / MMS", "CTC"],
     links: [
       { label: "GitHub", href: "#" }, // TODO: [ADD GITHUB LINK]
-      { label: "Notes", href: "/notes/asr-low-resource" },
+      {
+        label: "Notes",
+        href: "/blogs/2026/09/19/fine-tuning-asr-models-with-limited-gpu-resources",
+      },
     ],
     kind: "asr",
     specs: [

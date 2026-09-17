@@ -79,7 +79,15 @@ function AnalyticsMark() {
   return (
     <svg width="80" height="40" viewBox="0 0 80 40" aria-hidden>
       {[10, 24, 38].map((x) => (
-        <line key={x} x1={x} y1="6" x2={x} y2="34" stroke="rgba(255,255,255,0.12)" />
+        <line
+          key={x}
+          x1={x}
+          y1="6"
+          x2={x}
+          y2="34"
+          stroke="var(--color-fg)"
+          strokeOpacity={0.12}
+        />
       ))}
       {[
         [8, 30],
@@ -89,12 +97,21 @@ function AnalyticsMark() {
         [56, 21],
         [68, 12],
       ].map(([x, y], i) => (
-        <rect key={i} x={x} y={y} width="3" height={40 - y * 1.25} fill="rgba(110,155,255,0.5)" rx="1" />
+        <rect
+          key={i}
+          x={x}
+          y={y}
+          width="3"
+          height={40 - y * 1.25}
+          fill="var(--color-accent)"
+          fillOpacity={0.5}
+          rx="1"
+        />
       ))}
       <polyline
         points="6,28 20,20 34,23 48,14 62,17 76,8"
         fill="none"
-        stroke="#3ddc97"
+        stroke="var(--color-green)"
         strokeWidth="1.5"
       />
     </svg>
@@ -219,7 +236,7 @@ function BlockLabel({ children }: { children: React.ReactNode }) {
 function AnalyticsChart() {
   return (
     <svg viewBox="0 0 300 120" className="h-auto w-full" role="img" aria-label="Demo demand data">
-      <g stroke="rgba(255,255,255,0.07)">
+      <g stroke="var(--color-fg)" strokeOpacity={0.08}>
         {[30, 60, 90].map((y, i) => (
           <line key={i} x1="0" y1={y} x2="300" y2={y} strokeDasharray="3 3" />
         ))}
@@ -227,16 +244,17 @@ function AnalyticsChart() {
       <path
         d="M0,80 C40,72 55,88 90,78 C125,66 150,52 190,58 C230,64 260,42 300,34"
         fill="none"
-        stroke="rgba(110,155,255,0.6)"
+        stroke="var(--color-accent)"
+        strokeOpacity={0.7}
         strokeWidth="1.5"
       />
       <path
         d="M0,84 C60,78 120,64 180,62 C230,60 270,40 300,30"
         fill="none"
-        stroke="#3ddc97"
+        stroke="var(--color-green)"
         strokeWidth="1.5"
       />
-      <text x="8" y="112" fill="rgba(255,255,255,0.4)" fontSize="8" fontFamily="var(--font-mono)">
+      <text x="8" y="112" fill="var(--color-faint)" fontSize="8" fontFamily="var(--font-mono)">
         DEMO DATA — demand (blue) vs forecast (green), de-identified
       </text>
     </svg>

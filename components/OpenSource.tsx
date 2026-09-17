@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Github, Star } from "lucide-react";
 import { repoLinkPlaceholder } from "@/data/site";
-import { repos } from "@/data/notes";
+import { repos } from "@/data/repos";
 import { Reveal, SectionHeading, TechPills } from "./ui";
 
 export function OpenSource() {

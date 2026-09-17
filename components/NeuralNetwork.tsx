@@ -35,6 +35,23 @@ export function NeuralNetwork({ className }: { className?: string }) {
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     const interactive = !reduce && !coarse;
 
+    // Read theme colors from CSS tokens; refresh when data-theme changes.
+    const readPalette = () => {
+      const cs = getComputedStyle(document.documentElement);
+      return {
+        accent: cs.getPropertyValue("--color-accent").trim() || "#6e9bff",
+        fg: cs.getPropertyValue("--color-fg").trim() || "#e8e8ea",
+      };
+    };
+    let palette = readPalette();
+    const themeObserver = new MutationObserver(() => {
+      palette = readPalette();
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     let raf = 0;
     let running = true;
     let width = 0;
@@ -150,15 +167,15 @@ export function NeuralNetwork({ className }: { className?: string }) {
         const na = nodes[e.a];
         const nb = nodes[e.b];
         const hot = interactive && (active.has(e.a) || active.has(e.b));
-        ctx.strokeStyle = hot
-          ? "rgba(110,155,255,0.35)"
-          : "rgba(255,255,255,0.06)";
+        ctx.globalAlpha = hot ? 0.35 : 0.06;
+        ctx.strokeStyle = hot ? palette.accent : palette.fg;
         ctx.lineWidth = hot ? 1 : 0.7;
         ctx.beginPath();
         ctx.moveTo(na.x, na.y);
         ctx.lineTo(nb.x, nb.y);
         ctx.stroke();
       }
+      ctx.globalAlpha = 1;
 
       // nodes
       for (let i = 0; i < nodes.length; i++) {
@@ -166,13 +183,17 @@ export function NeuralNetwork({ className }: { className?: string }) {
         const hot = interactive && active.has(i);
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = hot ? "rgba(150,180,255,0.95)" : "rgba(255,255,255,0.28)";
+        ctx.globalAlpha = hot ? 0.95 : 0.28;
+        ctx.fillStyle = hot ? palette.accent : palette.fg;
         ctx.fill();
+        ctx.globalAlpha = 1;
         if (hot) {
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.r + 3, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(110,155,255,0.25)";
+          ctx.globalAlpha = 0.25;
+          ctx.strokeStyle = palette.accent;
           ctx.stroke();
+          ctx.globalAlpha = 1;
         }
       }
 
@@ -228,6 +249,7 @@ export function NeuralNetwork({ className }: { className?: string }) {
       cancelAnimationFrame(raf);
       io.disconnect();
       ro.disconnect();
+      themeObserver.disconnect();
       canvas.removeEventListener("pointermove", onPointer);
       canvas.removeEventListener("pointerleave", onLeave);
     };

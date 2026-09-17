@@ -145,9 +145,9 @@ export function KnowledgeGraph() {
                           y1={a.y}
                           x2={b.x}
                           y2={b.y}
-                          stroke={hot ? "#6e9bff" : "rgba(255,255,255,0.12)"}
+                          stroke={hot ? "var(--color-accent)" : "var(--color-fg)"}
                           strokeWidth={hot ? 1.4 : 1}
-                          strokeOpacity={hot ? 0.7 : 1}
+                          strokeOpacity={hot ? 0.7 : 0.12}
                           strokeDasharray={hot ? "0" : "2 3"}
                           style={{ transition: "stroke .25s, stroke-opacity .25s" }}
                           vectorEffect="non-scaling-stroke"
